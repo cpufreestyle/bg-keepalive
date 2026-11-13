@@ -36,6 +36,15 @@ KernelSU or Magisk module manager. Reboot.
 `service.sh` is executed by init at `late_start`, so the loop comes back on its
 own after every boot. There is no app, no UI and no daemon beyond one `sh`.
 
+### Add it as a repository
+
+The repo also ships a `modules.json`, so KernelSU Manager can list it like a
+store entry. Add this URL as a custom source:
+
+```
+https://raw.githubusercontent.com/cpufreestyle/bg-keepalive/main/modules.json
+```
+
 ## Configure
 
 Edit the block at the top of `service.sh`:
