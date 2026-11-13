@@ -42,19 +42,6 @@ assert_never_sleeping() {
   settings put global never_sleeping_packages "$val,"
 }
 
-crash_evidence() {
-  pk=$1
-  for f in $(ls -t /data/system/dropbox/ 2>/dev/null | head -8); do
-    if grep -q "Process: $pk$" "/data/system/dropbox/$f" 2>/dev/null; then
-      say "crash log: /data/system/dropbox/$f"
-      sed -n '1,12p;/^java\./,^\tat /p' "/data/system/dropbox/$f" 2>/dev/null | head -30 >> "$LOG"
-      return 0
-    fi
-  done
-  say "no dropbox entry for $pk, falling back to logcat"
-  logcat -b crash,main -d 2>/dev/null | grep -E "$pk|AndroidRuntime|FATAL|accessibility" | tail -40 >> "$LOG"
-}
-
 rebind() {
   comp=$1
   cur=$(settings get secure enabled_accessibility_services)
@@ -103,7 +90,8 @@ if [ -f "$PIDF" ]; then
 fi
 echo $$ > "$PIDF"
 
-say "start v3.2 pid=$$"
+modver=$(grep -m1 '^version=' "$MODDIR/module.prop" 2>/dev/null | cut -d= -f2)
+say "start ${modver:-unknown} pid=$$"
 assert_pkgs
 assert_never_sleeping
 guard_a11y
