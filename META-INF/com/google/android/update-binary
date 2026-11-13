@@ -1,0 +1,13 @@
+#!/sbin/sh
+umask 022
+OUTFD=$2
+ZIPFILE=$3
+
+mount /data 2>/dev/null
+
+for f in /data/adb/magisk/util_functions.sh /data/adb/ksu/bin/util_functions.sh; do
+  [ -f "$f" ] && . "$f"
+done
+
+install_module
+exit 0
