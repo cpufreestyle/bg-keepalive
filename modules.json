@@ -1,13 +1,13 @@
 {
-    "last_update": 1794790134372,
+    "last_update": 1794793211029,
     "modules": [
         {
             "id": "bg_keepalive",
-            "last_update": 1794790134372,
+            "last_update": 1794793211029,
             "notes_url": "https://raw.githubusercontent.com/cpufreestyle/bg-keepalive/main/README.md",
             "prop_url": "https://raw.githubusercontent.com/cpufreestyle/bg-keepalive/main/module.prop",
             "stars": 0,
-            "zip_url": "https://github.com/cpufreestyle/bg-keepalive/releases/download/v3.4/bg_keepalive-v3.4.zip"
+            "zip_url": "https://github.com/cpufreestyle/bg-keepalive/releases/download/v3.5/bg_keepalive-v3.5.zip"
         }
     ]
 }

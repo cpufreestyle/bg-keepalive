@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.5
+
+- Read the module version with `sed` instead of `grep -m1`, which toybox on
+  One UI 9 does not accept.
+- Probe `RUN_ANY_IN_BACKGROUND` once at startup and skip it when the ROM
+  rejects the op, so Samsung devices stop logging an error per package per sweep.
+- No change to the 3-minute sweep or to which apps are exempted.
+
 ## v3.4
 
 - Do not abort the install when the module manager does not export `API`;

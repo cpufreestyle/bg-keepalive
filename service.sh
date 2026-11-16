@@ -21,11 +21,28 @@ pkg_of() { echo "$1" | cut -d/ -f1; }
 fails() { cat "$STATED/$1.count" 2>/dev/null || echo 0; }
 set_fails() { mkdir -p "$STATED"; echo "$2" > "$STATED/$1.count"; }
 
+# Some One UI builds reject RUN_ANY_IN_BACKGROUND; probe once instead of
+# failing silently on every sweep.
+APPOP_RUNANY=1
+APPOP_PROBED=0
+probe_appop() {
+  [ "$APPOP_PROBED" = 1 ] && return 0
+  first=$(echo $PKG_LIST | cut -d' ' -f1)
+  out=$(appops set "$first" RUN_ANY_IN_BACKGROUND allow 2>&1)
+  case "$out" in
+    *"Unknown operation"*|*"unknown operation"*) APPOP_RUNANY=0 ;;
+  esac
+  APPOP_PROBED=1
+}
+
 assert_pkgs() {
+  probe_appop
   for p in $PKG_LIST; do
     cmd deviceidle whitelist +"$p" >/dev/null 2>&1
     am set-standby-bucket "$p" active >/dev/null 2>&1
-    appops set "$p" RUN_ANY_IN_BACKGROUND allow >/dev/null 2>&1
+    if [ "$APPOP_RUNANY" = 1 ]; then
+      appops set "$p" RUN_ANY_IN_BACKGROUND allow >/dev/null 2>&1
+    fi
     appops set "$p" RUN_IN_BACKGROUND allow >/dev/null 2>&1
   done
 }
@@ -90,7 +107,7 @@ if [ -f "$PIDF" ]; then
 fi
 echo $$ > "$PIDF"
 
-modver=$(grep -m1 '^version=' "$MODDIR/module.prop" 2>/dev/null | cut -d= -f2)
+modver=$(sed -n 's/^version=//p' "$MODDIR/module.prop" 2>/dev/null | head -n1)
 say "start ${modver:-unknown} pid=$$"
 assert_pkgs
 assert_never_sleeping
