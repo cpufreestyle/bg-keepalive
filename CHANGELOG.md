@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.4
+
+- Do not abort the install when the module manager does not export `API`;
+  the Android 11 check now only runs when the value is present.
+- No runtime behaviour change.
+
 ## v3.3
 
 - Package as a flashable zip (META-INF + customize.sh) for KernelSU and Magisk.

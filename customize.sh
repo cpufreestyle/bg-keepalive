@@ -6,7 +6,9 @@ SKIPUNZIP=0
 ui_print "- Background Keepalive"
 ui_print "- author: michaelqiu"
 
-if [ "$API" -lt 30 ]; then
+# Managers that do not export API would make `[ "$API" -lt 30 ]` fail with
+# "integer expression expected" and abort the install, so only check when set.
+if [ -n "$API" ] && [ "$API" -lt 30 ]; then
   abort "! Android 11 or newer is required (API $API found)"
 fi
 

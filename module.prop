@@ -1,7 +1,7 @@
 id=bg_keepalive
 name=Background Keepalive
-version=v3.3
-versionCode=7
+version=v3.4
+versionCode=8
 author=michaelqiu
 description=Keeps user-selected apps background-exempt and restores dropped accessibility bindings every 3 minutes, without rebinding services that are already healthy.
 updateJson=https://raw.githubusercontent.com/cpufreestyle/bg-keepalive/main/update.json
