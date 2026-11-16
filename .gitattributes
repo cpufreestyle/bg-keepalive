@@ -1,0 +1,3 @@
+# The module ships shell scripts; a CRLF checkout on Windows silently breaks them.
+* text=auto eol=lf
+*.zip binary

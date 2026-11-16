@@ -1,2 +1,5 @@
 out/
 *.log
+_scratch/
+_x/
+_relnotes*.md
